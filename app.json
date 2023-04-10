@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "quick-click-test",
-    "slug": "quick-click-test",
+    "name": "instagram",
+    "slug": "instagram",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

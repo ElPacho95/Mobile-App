@@ -13,3 +13,11 @@ export interface Geography {
   city: string;
   count: number;
 }
+
+export interface Body {
+  gender: string;
+  from: string;
+  to: string;
+  minAge: string;
+  maxAge: string;
+}

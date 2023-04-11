@@ -3,14 +3,14 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface Props {
   active: boolean;
-  setActive: Dispatch<SetStateAction<boolean>>;
+  onPress: () => void;
   title: string;
 }
 
-export const Button: React.FC<Props> = ({ active, setActive, title }) => {
+export const Button: React.FC<Props> = ({ active, onPress, title }) => {
   return (
     <TouchableOpacity
-      onPress={() => setActive(true)}
+      onPress={onPress}
       style={active ? styles.btnActive : styles.btn}
     >
       <Text style={active ? styles.textWhite : styles.textBlack}>{title}</Text>

@@ -2,7 +2,11 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import ContentLoader, { Rect } from "react-content-loader/native";
 
-const Loader = (props: any) => (
+interface Props {
+  title: string;
+}
+
+const Loader: React.FC<Props> = (props) => (
   <ContentLoader
     speed={1}
     width={323}

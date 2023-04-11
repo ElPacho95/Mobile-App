@@ -44,13 +44,18 @@ export default function LogInScreen({ navigation }: any) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, styles.marginLR]}>
       <KeyboardAwareScrollView
         enableResetScrollToCoords={false}
         contentContainerStyle={{ justifyContent: "center", flexGrow: 1 }}
       >
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
-        <Text style={styles.sigInText}>Войти в личный кабинет</Text>
+        <Image
+          source={require("../assets/logo.png")}
+          style={[styles.logo, styles.marginLR]}
+        />
+        <Text style={[styles.sigInText, styles.marginLR]}>
+          Войти в личный кабинет
+        </Text>
         <View style={styles.inputs}>
           <Controller
             control={control}
@@ -72,7 +77,7 @@ export default function LogInScreen({ navigation }: any) {
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  style={styles.passWord}
+                  style={[styles.passWord, styles.marginLR]}
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
@@ -105,10 +110,10 @@ export default function LogInScreen({ navigation }: any) {
             )}
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.forget}>
+        <TouchableOpacity style={[styles.forget, styles.marginLR]}>
           <Text style={{ color: "#727272" }}>Забыли пароль?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.Register}>
+        <TouchableOpacity style={[styles.Register, styles.marginLR]}>
           <Text style={styles.dontHaveAcc}>Нет учетной записи?</Text>
           <Text style={styles.registerText}>Зарегистрируйтесь</Text>
         </TouchableOpacity>
@@ -121,20 +126,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
   },
   logo: {
     width: 208,
     height: 127,
-    marginLeft: "auto",
-    marginRight: "auto",
   },
   sigInText: {
     fontSize: 20,
     height: 28,
-    marginLeft: "auto",
-    marginRight: "auto",
     marginTop: 60,
     fontFamily: "bold",
     lineHeight: 25,
@@ -158,8 +157,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   passWord: {
-    marginLeft: "auto",
-    marginRight: "auto",
     color: "#727272",
     width: 300,
     paddingTop: 4,
@@ -191,13 +188,9 @@ const styles = StyleSheet.create({
     text: { color: "white", fontFamily: "Medium", lineHeight: 20 },
   },
   forget: {
-    marginLeft: "auto",
-    marginRight: "auto",
     marginTop: 25,
   },
   Register: {
-    marginLeft: "auto",
-    marginRight: "auto",
     marginTop: 89,
   },
   dontHaveAcc: {
@@ -213,5 +206,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: "Medium",
     fontWeight: "500",
+  },
+  marginLR: {
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });

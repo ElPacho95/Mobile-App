@@ -9,7 +9,7 @@ import { Root } from "../../types/types";
 interface LogInState {
   loading: boolean;
   data: Root;
-  error: any;
+  error: unknown;
 }
 
 const initialState: LogInState = {
@@ -32,7 +32,7 @@ export const signIn = createAsyncThunk(
 
 export const getData = createAsyncThunk(
   "data/getData",
-  async (body: any, thunkAPI) => {
+  async (body: Body, thunkAPI) => {
     try {
       const value = await AsyncStorage.getItem("authorization");
       attachAuthToken(value as string);
@@ -42,8 +42,8 @@ export const getData = createAsyncThunk(
         });
         return data;
       }
-    } catch (e: any) {
-      return thunkAPI.rejectWithValue(e.message);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
     }
   }
 );

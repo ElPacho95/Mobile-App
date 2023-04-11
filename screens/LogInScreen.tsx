@@ -51,7 +51,6 @@ export default function LogInScreen({ navigation }: any) {
       const token = await AsyncStorage.getItem("token");
       attachAuthToken(token as string);
       if (token !== null) {
-        console.log(token);
         navigation.navigate("Main");
       } else {
         logout();

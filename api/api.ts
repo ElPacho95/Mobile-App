@@ -8,12 +8,12 @@ export const baseService = axios.create({
 });
 
 export const logout = async () => {
-  await AsyncStorage.removeItem("token");
+  await AsyncStorage.removeItem("authorization");
 };
 
 export const fillToken = async (authorization: string) => {
   baseService.defaults.headers.common.Authorization = `Bearer ${authorization}`;
-  await AsyncStorage.setItem("token", authorization);
+  await AsyncStorage.setItem("authorization", authorization);
 };
 
 export const attachAuthToken = (authorization: string) => {

@@ -24,7 +24,6 @@ export const signIn = createAsyncThunk(
     try {
       const { data } = await baseService.post("/auth/tokens/create/", admin);
       fillToken(data.accessToken);
-      attachAuthToken(data.accessToken);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -35,16 +34,16 @@ export const getData = createAsyncThunk(
   "data/getData",
   async (body: any, thunkAPI) => {
     try {
-      const value = await AsyncStorage.getItem("token");
+      const value = await AsyncStorage.getItem("authorization");
       attachAuthToken(value as string);
       if (value !== null) {
-        const response = await baseService.get("/content/statistics/", {
+        const { data } = await baseService.get("/content/statistics/", {
           params: body,
         });
-        return response.data;
+        return data;
       }
     } catch (e: any) {
-      console.log(thunkAPI.rejectWithValue(e.message));
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );

@@ -7,18 +7,17 @@ interface Props {
   title: string;
 }
 
-export const Btn: React.FC<Props> = ({ active, setActive, title }) => {
+export const Button: React.FC<Props> = ({ active, setActive, title }) => {
   return (
     <TouchableOpacity
       onPress={() => setActive(true)}
       style={active ? styles.btnActive : styles.btn}
     >
-      <Text style={active ? styles.btnActive.text : styles.btn.text}>
-        {title}
-      </Text>
+      <Text style={active ? styles.textWhite : styles.textBlack}>{title}</Text>
     </TouchableOpacity>
   );
 };
+
 const styles = StyleSheet.create({
   btn: {
     borderWidth: 1,
@@ -29,10 +28,9 @@ const styles = StyleSheet.create({
     height: 39,
     alignItems: "center",
     justifyContent: "center",
-
     marginTop: 15,
-    text: { color: "black" },
   },
+  textBlack: { color: "black" },
   btnActive: {
     backgroundColor: "#747487",
     width: 161,
@@ -41,8 +39,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 15,
     borderRadius: 5,
-    text: { color: "white" },
   },
+  textWhite: { color: "white" },
 });
 
-export default Btn;
+export default Button;

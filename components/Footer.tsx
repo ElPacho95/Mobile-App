@@ -1,16 +1,10 @@
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { SafeAreaView, TouchableOpacity, StyleSheet, View } from "react-native";
 
+import Message from "../svgs/Message";
+import Heart from "../svgs/Heart";
 import User from "../svgs/User";
 import Home from "../svgs/Home";
-import Heart from "../svgs/Heart";
 import Add from "../svgs/Add";
-import Message from "../svgs/Message";
 
 export default function Footer() {
   return (
@@ -38,14 +32,12 @@ export default function Footer() {
 
 const styles = StyleSheet.create({
   Footer: {
-    borderColor: "#C9C9C9",
-    borderWidth: 1,
     position: "absolute",
     bottom: 0,
     width: "100%",
   },
   icons: {
-    paddingTop: 7,
+    paddingTop: 27,
     height: 48,
     justifyContent: "space-around",
     flexDirection: "row",

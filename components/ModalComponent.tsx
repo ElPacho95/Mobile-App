@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
 interface Props {
   modalVisible: boolean;

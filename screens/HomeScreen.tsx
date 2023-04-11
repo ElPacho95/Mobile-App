@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import ModalComponent from "../components/ModalComponent";
+import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
@@ -198,7 +198,7 @@ export default function HomeScreen() {
           </View>
         </View>
       </SafeAreaView>
-      <ModalComponent
+      <Modal
         title="Выбор параметров периода"
         modalVisible={dateModal}
         setModalVisible={setDateModal}
@@ -221,8 +221,8 @@ export default function HomeScreen() {
             display="default"
           />
         </View>
-      </ModalComponent>
-      <ModalComponent
+      </Modal>
+      <Modal
         title="Выбор параметров возраста"
         modalVisible={ageModal}
         setModalVisible={setAgeModal}
@@ -243,8 +243,8 @@ export default function HomeScreen() {
             style={styles.num}
           />
         </View>
-      </ModalComponent>
-      <ModalComponent
+      </Modal>
+      <Modal
         title="Выбор параметров пола аудитории"
         modalVisible={genderModal}
         setModalVisible={setGenderModal}
@@ -272,7 +272,7 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-      </ModalComponent>
+      </Modal>
       <Footer />
     </>
   );
@@ -345,6 +345,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    width: 290,
   },
   dateFlex: {
     flexDirection: "row",

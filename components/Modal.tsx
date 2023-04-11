@@ -1,5 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Modal as BaseModal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+} from "react-native";
 
 interface Props {
   modalVisible: boolean;
@@ -9,7 +15,7 @@ interface Props {
   save: () => void;
 }
 
-export const ModalComponent: React.FC<Props> = ({
+export const Modal: React.FC<Props> = ({
   children,
   title,
   modalVisible,
@@ -27,7 +33,7 @@ export const ModalComponent: React.FC<Props> = ({
 
   return (
     <View style={styles.centeredView}>
-      <Modal
+      <BaseModal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -47,7 +53,7 @@ export const ModalComponent: React.FC<Props> = ({
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </BaseModal>
     </View>
   );
 };
@@ -97,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalComponent;
+export default Modal;

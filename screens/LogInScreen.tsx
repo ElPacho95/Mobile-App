@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,16 +10,13 @@ import {
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm, Controller } from "react-hook-form";
 
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { signIn } from "../store/reducer/adminSlice";
 
-import { attachAuthToken, logout } from "../api/api";
-
-import Eye from "../svgs/Eye";
 import Loader from "../components/Loader";
+import Eye from "../svgs/Eye";
 
 export interface IForm {
   login?: string;
@@ -45,20 +42,6 @@ export default function LogInScreen({ navigation }: any) {
     },
     [signIn]
   );
-
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem("token");
-      attachAuthToken(token as string);
-      if (token !== null) {
-        navigation.navigate("Main");
-      } else {
-        logout();
-        navigation.navigate("Home");
-      }
-    };
-    checkToken();
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -6,13 +6,13 @@ import { attachAuthToken, baseService, fillToken } from "../../api/api";
 import { IForm } from "../../screens/LogInScreen";
 import { Root } from "../../types/types";
 
-interface AdminState {
+interface LogInState {
   loading: boolean;
   data: Root;
   error: any;
 }
 
-const initialState: AdminState = {
+const initialState: LogInState = {
   loading: false,
   data: {} as Root,
   error: "",
@@ -48,8 +48,8 @@ export const getData = createAsyncThunk(
   }
 );
 
-export const adminSlice = createSlice({
-  name: "admin",
+export const logInSlice = createSlice({
+  name: "logIn",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -73,4 +73,4 @@ export const adminSlice = createSlice({
   },
 });
 
-export default adminSlice.reducer;
+export default logInSlice.reducer;

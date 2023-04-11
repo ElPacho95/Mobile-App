@@ -2,11 +2,11 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-import adminSlice from "./reducer/adminSlice";
+import logInSlice from "./reducer/logInSlice";
 
 export const store = configureStore({
   reducer: {
-    adminSlice,
+    logInSlice,
   },
 });
 

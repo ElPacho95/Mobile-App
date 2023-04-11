@@ -18,10 +18,10 @@ import Menu from "../svgs/Menu";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { getData } from "../store/reducer/adminSlice";
+import { getData } from "../store/reducer/logInSlice";
 
 export default function HomeScreen() {
-  const { data } = useAppSelector((state) => state.adminSlice);
+  const { data } = useAppSelector((state) => state.logInSlice);
 
   const [genderModal, setGenderModal] = useState<boolean>(false);
   const [dateModal, setDateModal] = useState<boolean>(false);

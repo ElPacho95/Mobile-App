@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useForm, Controller } from "react-hook-form";
 
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { signIn } from "../store/reducer/adminSlice";
+import { signIn } from "../store/reducer/logInSlice";
 
 import Loader from "../components/Loader";
 import Eye from "../svgs/Eye";
@@ -24,7 +24,7 @@ export interface IForm {
 }
 
 export default function LogInScreen({ navigation }: any) {
-  const { loading } = useAppSelector((state) => state.adminSlice);
+  const { loading } = useAppSelector((state) => state.logInSlice);
   const [showPass, setShowPass] = useState<boolean>(true);
   const { handleSubmit, control, watch } = useForm();
 

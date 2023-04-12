@@ -46,7 +46,7 @@ export const Modal: React.FC<Props> = ({
   save,
 }) => {
   const onChange = (
-    enent: DateTimePickerEvent,
+    event: DateTimePickerEvent,
     selectedDate: Date | undefined
   ): void => {
     if (selectedDate) {

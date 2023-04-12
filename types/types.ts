@@ -16,8 +16,8 @@ export interface Geography {
 
 export interface Body {
   gender: string;
-  from: string;
-  to: string;
-  minAge: string;
-  maxAge: string;
+  from: Date;
+  to: Date;
+  minAge: Date;
+  maxAge: Date;
 }

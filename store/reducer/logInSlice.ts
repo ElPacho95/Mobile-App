@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { attachAuthToken, baseService, fillToken } from "../../api/api";
 
 import { IForm } from "../../screens/LogInScreen";
-import { Root } from "../../types/types";
+import { Root, Body } from "../../types/types";
 
 interface LogInState {
   loading: boolean;

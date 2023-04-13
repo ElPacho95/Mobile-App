@@ -11,12 +11,12 @@ import Modal from "../components/Modal";
 import Arrow from "../svgs/Arrow";
 import Menu from "../svgs/Menu";
 
+import { GenderType, OpenedType } from "../types/types";
+
 export default function HomeScreen() {
   const { data } = useAppSelector((state) => state.logInSlice);
 
-  const [openedType, setOpenedType] = useState<
-    null | "age" | "gender" | "date"
-  >(null);
+  const [openedType, setOpenedType] = useState<OpenedType>(null);
 
   const [from, setFrom] = useState(new Date());
   const [to, setTo] = useState(new Date());
@@ -24,37 +24,42 @@ export default function HomeScreen() {
   const [minAge, setMinAge] = useState("20");
   const [maxAge, setMaxAge] = useState("22");
 
-  const today = new Date();
-
-  const minAgeDate = new Date(
-    today.getFullYear() - parseInt(minAge),
-    today.getMonth(),
-    today.getDate()
-  );
-
-  const maxAgeDate = new Date(
-    today.getFullYear() - parseInt(maxAge),
-    today.getMonth(),
-    today.getDate()
-  );
-
-  const [gender, setGender] = useState("MALE");
+  const [gender, setGender] = useState<GenderType>("MALE");
 
   const dispatch = useAppDispatch();
+
   const handleGetData = () => {
     const post = {
       gender: gender,
       from: from,
       to: to,
-      minAge: minAgeDate,
-      maxAge: maxAgeDate,
+      minAge: +minAge,
+      maxAge: +maxAge,
     };
     dispatch(getData(post));
   };
 
   useEffect(() => {
     handleGetData();
-  }, [dispatch]);
+  }, [gender, from, to, minAge, maxAge]);
+
+  const settings = {
+    openedType: openedType,
+    from: from,
+    to: to,
+    minAge: minAge,
+    maxAge: maxAge,
+    gender: gender,
+  };
+
+  const setSettings = {
+    setOpenedType: setOpenedType,
+    setFrom: setFrom,
+    setTo: setTo,
+    setMinAge: setMinAge,
+    setMaxAge: setMaxAge,
+    setGender: setGender,
+  };
 
   return (
     <>
@@ -129,21 +134,25 @@ export default function HomeScreen() {
                 <Text style={styles.marginTop}>{data?.uniqueChats}</Text>
               </View>
             </View>
-
             <View>
               <Text style={styles.bondText}>География</Text>
-              {data?.geography?.length === 0 ? (
-                <Text style={styles.marginTop}>Список пуст</Text>
-              ) : (
-                data?.geography?.map((item) => {
-                  return (
-                    <View style={[styles.displayFlex, { width: 295 }]}>
-                      <Text style={styles.marginTop}>{item.city}</Text>
-                      <Text style={styles.marginTop}>{item.count}</Text>
-                    </View>
-                  );
-                })
-              )}
+              <View>
+                <Text style={styles.marginTop}>
+                  {Object.keys(data.geography || {}).length === 0 ? (
+                    <Text>Список пуст</Text>
+                  ) : (
+                    Object.keys(data.geography).map((item) => (
+                      <View
+                        style={[styles.displayFlex, { width: 295 }]}
+                        key={item}
+                      >
+                        <Text>{item}</Text>
+                        <Text>{data.geography[item]}</Text>
+                      </View>
+                    ))
+                  )}
+                </Text>
+              </View>
               <Text style={styles.bondText}>Заказы</Text>
               <View style={[styles.displayFlex, { width: 295 }]}>
                 <View>
@@ -159,21 +168,7 @@ export default function HomeScreen() {
           </View>
         </View>
       </SafeAreaView>
-      <Modal
-        openedType={openedType}
-        setOpenedType={setOpenedType}
-        from={from}
-        setFrom={setFrom}
-        to={to}
-        setTo={setTo}
-        minAge={minAge}
-        maxAge={maxAge}
-        setMinAge={setMinAge}
-        setMaxAge={setMaxAge}
-        gender={gender}
-        setGender={setGender}
-        save={handleGetData}
-      />
+      <Modal state={settings} setState={setSettings} />
       <Footer />
     </>
   );

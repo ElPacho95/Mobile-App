@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import {
   Modal as BaseModal,
   StyleSheet,
@@ -11,40 +11,18 @@ import {
 
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { SetSettings, Settings } from "../types/types";
 
 interface Props {
-  openedType: string | null;
-  setOpenedType: React.Dispatch<
-    React.SetStateAction<"age" | "gender" | "date" | null>
-  >;
-  from: Date;
-  setFrom: React.Dispatch<React.SetStateAction<Date>>;
-  to: Date;
-  setTo: React.Dispatch<React.SetStateAction<Date>>;
-  minAge: string;
-  maxAge: string;
-  setMinAge: Dispatch<string>;
-  setMaxAge: Dispatch<string>;
-  gender: string;
-  setGender: Dispatch<string>;
-  save: () => void;
+  state: Settings;
+  setState: SetSettings;
 }
 
-export const Modal: React.FC<Props> = ({
-  openedType,
-  setOpenedType,
-  setFrom,
-  from,
-  to,
-  setTo,
-  minAge,
-  setMinAge,
-  maxAge,
-  setMaxAge,
-  gender,
-  setGender,
-  save,
-}) => {
+export const Modal: React.FC<Props> = ({ state, setState }) => {
+  const { openedType, maxAge, minAge, gender, from, to } = state;
+  const { setOpenedType, setGender, setMinAge, setMaxAge, setTo, setFrom } =
+    setState;
+
   const onChange = (
     event: DateTimePickerEvent,
     selectedDate: Date | undefined
@@ -82,7 +60,6 @@ export const Modal: React.FC<Props> = ({
   }
 
   const handleSave = () => {
-    save();
     setOpenedType(null);
   };
 
@@ -108,7 +85,7 @@ export const Modal: React.FC<Props> = ({
                 : null}
             </Text>
             {openedType === "date" ? (
-              <View style={styles.dateFlex}>
+              <View style={[styles.displayFlex, { marginTop: 23 }]}>
                 <DateTimePicker
                   value={from}
                   onChange={onChange}
@@ -126,28 +103,28 @@ export const Modal: React.FC<Props> = ({
                 />
               </View>
             ) : openedType === "age" ? (
-              <View style={styles.modalParams}>
+              <View style={[styles.displayFlex, { width: 290 }]}>
                 <TextInput
                   onChangeText={handleMinAgeChange}
                   value={minAge}
                   keyboardType="numeric"
-                  style={styles.num}
+                  style={styles.numberInput}
                 />
                 <Text style={styles.marginTop}>-</Text>
                 <TextInput
                   onChangeText={handleMaxAgeChange}
                   value={maxAge}
                   keyboardType="numeric"
-                  style={styles.num}
+                  style={styles.numberInput}
                 />
               </View>
             ) : openedType === "gender" ? (
-              <View style={styles.modalParams}>
+              <View style={[styles.displayFlex, { width: 290 }]}>
                 <TouchableOpacity
                   onPress={() => setGender("MALE")}
                   style={
                     gender === "MALE"
-                      ? styles.genderBtnActive
+                      ? { ...styles.genderBtn, backgroundColor: "#747487" }
                       : styles.genderBtn
                   }
                 >
@@ -163,7 +140,7 @@ export const Modal: React.FC<Props> = ({
                   onPress={() => setGender("FEMALE")}
                   style={
                     gender === "FEMALE"
-                      ? styles.genderBtnActive
+                      ? { ...styles.genderBtn, backgroundColor: "#747487" }
                       : styles.genderBtn
                   }
                 >
@@ -225,20 +202,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
   },
-  dateFlex: {
+  displayFlex: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 23,
   },
-  modalParams: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    textAlign: "center",
-    alignItems: "center",
-    width: 290,
-  },
-  num: {
+  numberInput: {
     width: 134,
     height: 48,
     backgroundColor: "#D8D8DD",
@@ -253,14 +222,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
     backgroundColor: "#D8D8DD",
-    marginTop: 16,
-  },
-  genderBtnActive: {
-    backgroundColor: "#747487",
-    width: 134,
-    height: 48,
-    justifyContent: "center",
-    borderRadius: 5,
     marginTop: 16,
   },
   textWhite: { color: "white", textAlign: "center" },

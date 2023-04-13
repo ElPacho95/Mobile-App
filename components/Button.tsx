@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface Props {
@@ -11,7 +11,9 @@ export const Button: React.FC<Props> = ({ active, onPress, title }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={active ? styles.btnActive : styles.btn}
+      style={
+        active ? { ...styles.btn, backgroundColor: "#747487" } : styles.btn
+      }
     >
       <Text style={active ? styles.textWhite : styles.textBlack}>{title}</Text>
     </TouchableOpacity>
@@ -31,15 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   textBlack: { color: "black" },
-  btnActive: {
-    backgroundColor: "#747487",
-    width: 161,
-    height: 39,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 15,
-    borderRadius: 5,
-  },
   textWhite: { color: "white" },
 });
 

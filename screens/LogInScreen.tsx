@@ -36,8 +36,8 @@ export default function LogInScreen({ navigation }: any) {
       try {
         await dispatch(signIn(data)).unwrap();
         navigation.navigate("Main");
-      } catch (e: any) {
-        console.log(e.message);
+      } catch (e) {
+        console.log(e);
       }
     },
     [signIn]
@@ -94,7 +94,15 @@ export default function LogInScreen({ navigation }: any) {
           </View>
 
           <TouchableOpacity
-            style={login && password ? styles.btnActive : styles.btn}
+            style={
+              login && password
+                ? {
+                    ...styles.btn,
+                    backgroundColor: "#747487",
+                    ...styles.marginLR,
+                  }
+                : [styles.btn, styles.marginLR]
+            }
             onPress={handleSubmit(onSubmit)}
           >
             {loading ? (
@@ -102,7 +110,9 @@ export default function LogInScreen({ navigation }: any) {
             ) : (
               <Text
                 style={
-                  login && password ? styles.btnActive.text : styles.btn.text
+                  login && password
+                    ? { ...styles.btn.text, color: "white" }
+                    : styles.btn.text
                 }
               >
                 Войти
@@ -170,22 +180,8 @@ const styles = StyleSheet.create({
     height: 47,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
     marginTop: 70,
     text: { color: "black", fontFamily: "Medium", lineHeight: 20 },
-  },
-  btnActive: {
-    backgroundColor: "#747487",
-    width: 323,
-    height: 47,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 70,
-    borderRadius: 5,
-    text: { color: "white", fontFamily: "Medium", lineHeight: 20 },
   },
   forget: {
     marginTop: 25,

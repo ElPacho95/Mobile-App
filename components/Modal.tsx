@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Modal as BaseModal,
   StyleSheet,
@@ -11,24 +11,20 @@ import {
 
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { SetSettings, Settings } from "../types/types";
+import { SettingsState } from "../types/types";
 
 interface Props {
-  state: Settings;
-  setState: SetSettings;
+  state: SettingsState;
+  setState: Dispatch<SetStateAction<SettingsState>>;
 }
 
 export const Modal: React.FC<Props> = ({ state, setState }) => {
-  const { openedType, maxAge, minAge, gender, from, to } = state;
-  const { setOpenedType, setGender, setMinAge, setMaxAge, setTo, setFrom } =
-    setState;
-
   const onChange = (
     event: DateTimePickerEvent,
     selectedDate: Date | undefined
   ): void => {
     if (selectedDate) {
-      setFrom(selectedDate);
+      setState({ ...state, from: selectedDate });
     }
   };
 
@@ -37,30 +33,30 @@ export const Modal: React.FC<Props> = ({ state, setState }) => {
     selectedDate: Date | undefined
   ): void => {
     if (selectedDate) {
-      setTo(selectedDate);
+      setState({ ...state, to: selectedDate });
     }
   };
 
   const handleMinAgeChange = (text: string) => {
     const regex = /^\d{0,2}$/;
     if (regex.test(text)) {
-      setMinAge(text);
+      setState({ ...state, minAge: text });
     }
   };
 
   const handleMaxAgeChange = (text: string) => {
     const regex = /^\d{0,2}$/;
     if (regex.test(text)) {
-      setMaxAge(text);
+      setState({ ...state, maxAge: text });
     }
   };
 
-  if (!openedType) {
+  if (!state.modal) {
     return null;
   }
 
   const handleSave = () => {
-    setOpenedType(null);
+    setState({ ...state, modal: null });
   };
 
   return (
@@ -68,26 +64,26 @@ export const Modal: React.FC<Props> = ({ state, setState }) => {
       <BaseModal
         animationType="slide"
         transparent={true}
-        visible={!!openedType}
+        visible={!!state.modal}
         onRequestClose={() => {
-          setOpenedType(null);
+          setState({ ...state, modal: null });
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              {openedType === "age"
+              {state.modal === "age"
                 ? "Выбор параметров возраста"
-                : openedType === "gender"
+                : state.modal === "gender"
                 ? "Выбор параметров пола аудитории"
-                : openedType === "date"
+                : state.modal === "date"
                 ? "Выбор параметров периода"
                 : null}
             </Text>
-            {openedType === "date" ? (
+            {state.modal === "date" ? (
               <View style={[styles.displayFlex, { marginTop: 23 }]}>
                 <DateTimePicker
-                  value={from}
+                  value={state.from}
                   onChange={onChange}
                   testID="dateTimePicker"
                   mode="date"
@@ -95,58 +91,62 @@ export const Modal: React.FC<Props> = ({ state, setState }) => {
                 />
                 <Text>{"   :"}</Text>
                 <DateTimePicker
-                  value={to}
+                  value={state.to}
                   onChange={onChange2}
                   testID="dateTimePicker"
                   mode="date"
                   display="default"
                 />
               </View>
-            ) : openedType === "age" ? (
+            ) : state.modal === "age" ? (
               <View style={[styles.displayFlex, { width: 290 }]}>
                 <TextInput
                   onChangeText={handleMinAgeChange}
-                  value={minAge}
+                  value={state.minAge}
                   keyboardType="numeric"
                   style={styles.numberInput}
                 />
                 <Text style={styles.marginTop}>-</Text>
                 <TextInput
                   onChangeText={handleMaxAgeChange}
-                  value={maxAge}
+                  value={state.maxAge}
                   keyboardType="numeric"
                   style={styles.numberInput}
                 />
               </View>
-            ) : openedType === "gender" ? (
+            ) : state.modal === "gender" ? (
               <View style={[styles.displayFlex, { width: 290 }]}>
                 <TouchableOpacity
-                  onPress={() => setGender("MALE")}
+                  onPress={() => setState({ ...state, gender: "MALE" })}
                   style={
-                    gender === "MALE"
+                    state.gender === "MALE"
                       ? { ...styles.genderBtn, backgroundColor: "#747487" }
                       : styles.genderBtn
                   }
                 >
                   <Text
                     style={
-                      gender === "MALE" ? styles.textWhite : styles.textBlack
+                      state.gender === "MALE"
+                        ? styles.textWhite
+                        : styles.textBlack
                     }
                   >
                     Мужчины
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setGender("FEMALE")}
+                  onPress={() => setState({ ...state, gender: "FEMALE" })}
                   style={
-                    gender === "FEMALE"
+                    state.gender === "FEMALE"
                       ? { ...styles.genderBtn, backgroundColor: "#747487" }
                       : styles.genderBtn
                   }
                 >
                   <Text
                     style={
-                      gender === "FEMALE" ? styles.textWhite : styles.textBlack
+                      state.gender === "FEMALE"
+                        ? styles.textWhite
+                        : styles.textBlack
                     }
                   >
                     Женщины

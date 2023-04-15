@@ -23,12 +23,8 @@ export interface Body {
   maxAge: string | number;
 }
 
-export type OpenedType = null | "age" | "gender" | "date";
-
-export type GenderType = "MALE" | "FEMALE";
-
-export interface Settings {
-  openedType: string | null;
+export interface SettingsState {
+  modal: null | "date" | "age" | "gender";
   from: Date;
   to: Date;
   minAge: string;
@@ -36,11 +32,4 @@ export interface Settings {
   gender: GenderType;
 }
 
-export interface SetSettings {
-  setOpenedType: Dispatch<SetStateAction<OpenedType>>;
-  setFrom: Dispatch<SetStateAction<Date>>;
-  setTo: Dispatch<SetStateAction<Date>>;
-  setMinAge: Dispatch<SetStateAction<string>>;
-  setMaxAge: Dispatch<SetStateAction<string>>;
-  setGender: Dispatch<SetStateAction<GenderType>>;
-}
+export type GenderType = "MALE" | "FEMALE";

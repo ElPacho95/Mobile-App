@@ -11,55 +11,42 @@ import Modal from "../components/Modal";
 import Arrow from "../svgs/Arrow";
 import Menu from "../svgs/Menu";
 
-import { GenderType, OpenedType } from "../types/types";
+import { SettingsState } from "../types/types";
 
 export default function HomeScreen() {
   const { data } = useAppSelector((state) => state.logInSlice);
 
-  const [openedType, setOpenedType] = useState<OpenedType>(null);
-
-  const [from, setFrom] = useState(new Date());
-  const [to, setTo] = useState(new Date());
-
-  const [minAge, setMinAge] = useState("20");
-  const [maxAge, setMaxAge] = useState("22");
-
-  const [gender, setGender] = useState<GenderType>("MALE");
+  const [settings, setSettings] = useState<SettingsState>({
+    minAge: "20",
+    maxAge: "22",
+    gender: "MALE",
+    from: new Date(),
+    to: new Date(),
+    modal: null,
+  });
 
   const dispatch = useAppDispatch();
 
   const handleGetData = () => {
     const post = {
-      gender: gender,
-      from: from,
-      to: to,
-      minAge: +minAge,
-      maxAge: +maxAge,
+      gender: settings.gender,
+      from: settings.from,
+      to: settings.to,
+      minAge: +settings.minAge,
+      maxAge: +settings.maxAge,
     };
     dispatch(getData(post));
   };
 
   useEffect(() => {
     handleGetData();
-  }, [gender, from, to, minAge, maxAge]);
-
-  const settings = {
-    openedType: openedType,
-    from: from,
-    to: to,
-    minAge: minAge,
-    maxAge: maxAge,
-    gender: gender,
-  };
-
-  const setSettings = {
-    setOpenedType: setOpenedType,
-    setFrom: setFrom,
-    setTo: setTo,
-    setMinAge: setMinAge,
-    setMaxAge: setMaxAge,
-    setGender: setGender,
-  };
+  }, [
+    settings.gender,
+    settings.from,
+    settings.to,
+    settings.minAge,
+    settings.maxAge,
+  ]);
 
   return (
     <>
@@ -74,34 +61,38 @@ export default function HomeScreen() {
             <View style={styles.displayFlex}>
               <Button
                 title="Последние 30 дней"
-                active={openedType === "date"}
-                onPress={() => setOpenedType("date")}
+                active={settings.modal === "date"}
+                onPress={() => setSettings({ ...settings, modal: "date" })}
               />
               <Text style={styles.text}>
-                {from.getDate()}{" "}
-                {from.toLocaleString("default", { month: "long" }).slice(0, 3)}{" "}
-                - {to.getDate()}{" "}
-                {to.toLocaleString("default", { month: "long" })}
+                {settings.from.getDate()}{" "}
+                {settings.from
+                  .toLocaleString("default", { month: "long" })
+                  .slice(0, 3)}{" "}
+                - {settings.to.getDate()}{" "}
+                {settings.to.toLocaleString("default", { month: "long" })}
               </Text>
             </View>
             <View style={[styles.displayFlex, { width: 325 }]}>
               <Button
                 title="Возраст аудитории"
-                active={openedType === "age"}
-                onPress={() => setOpenedType("age")}
+                active={settings.modal === "age"}
+                onPress={() => setSettings({ ...settings, modal: "age" })}
               />
-              <Text style={styles.text}>{`${minAge}-${maxAge}`}</Text>
+              <Text
+                style={styles.text}
+              >{`${settings.minAge}-${settings.maxAge}`}</Text>
             </View>
             <View style={[styles.displayFlex, { width: 340 }]}>
               <Button
                 title="Пол. аудитории"
-                active={openedType === "gender"}
-                onPress={() => setOpenedType("gender")}
+                active={settings.modal === "gender"}
+                onPress={() => setSettings({ ...settings, modal: "gender" })}
               />
               <Text style={styles.text}>
-                {gender === "MALE"
+                {settings.gender === "MALE"
                   ? "Мужчины"
-                  : gender === "FEMALE"
+                  : settings.gender === "FEMALE"
                   ? "Женщины"
                   : null}
               </Text>
